@@ -1,6 +1,6 @@
 #A small little app that shows some sats related to junk in enter the gungeon
+#Why? Becuase I enjoy making things, I have ideas and I want to put them to life. Someday I might include this in a larger program for ETG.
 #Written by KillerKat on 11/22/2020
-
 from tkinter import *
 import tkinter.messagebox
 
@@ -9,18 +9,23 @@ gold_junk = 0
 lies = 0
 total = 0
 junkan = False
+junkan_rank = "N/A"
+robot_DMG_boost = 0
 
 def reset():
-    global junk, gold_junk, lies, junkan
+    global junk, gold_junk, lies, junkan, junkan_rank
     junk = 0
     gold_junk = 0
     lies = 0
     total = 0
     junkan = False
+    junkan_rank = "N/A"
+    robot_DMG_boost = 0
     junk_output.set(str(junk))
     gold_junk_output.set(str(gold_junk))
     lies_output.set(str(lies))
     total_output.set(str(total))
+    junkan_rank_output.set(junkan_rank)
 
 def plus_button( type ): #Yes I know this isnt the most efficent way but python doesnt have switches, if I could I would just use the varible as the argument.
     if type == 1:
@@ -40,6 +45,7 @@ def plus_button( type ): #Yes I know this isnt the most efficent way but python 
     global total
     total = (junk + gold_junk + lies)
     total_output.set(str(total))
+    Rank_Check()
 
 def minus_button( type ): #Like why cant I just give it a global varible as an argument and then refrence that variable in the function as an argument?
     if type == 1:
@@ -59,9 +65,40 @@ def minus_button( type ): #Like why cant I just give it a global varible as an a
     global total
     total = (junk + gold_junk + lies)
     total_output.set(str(total))
+    Rank_Check()
 
-
-
+def Rank_Check():
+    global junkan, gold_junk, total
+    if junkan == False:
+        junkan_rank = "N/A"
+    elif gold_junk > 0:
+        junkan_rank = "Mecha Junkan"
+    elif total >= 7:
+        junkan_rank = "Angelic Knight"
+    elif total == 0:
+        junkan_rank = "Peasant"
+    elif total == 1:
+        junkan_rank = "Squire"
+    elif total == 2:
+        junkan_rank = "Knight"
+    elif total == 3:
+        junkan_rank = "Knight Lieutenant"
+    elif total == 4:
+        junkan_rank = "Knight Commander"
+    elif total == 5:
+        junkan_rank = "Holy Knight"
+    elif total == 6:
+        junkan_rank = "Hedge Knight"
+    else:
+        junkan_rank = "Internal ERROR"
+    junkan_rank_output.set(junkan_rank)
+def Junkan_Toggle():
+    global junkan
+    if junkan == False:
+        junkan = True
+    else:
+       junkan = False
+    Rank_Check()
 #Gui
 root = Tk()
 root.title("Junk O Meeter")
@@ -74,13 +111,17 @@ gold_junk_output = StringVar()
 gold_junk_output.set(str(gold_junk))
 lies_output = StringVar() 
 lies_output.set(str(lies))
-total_output = StringVar() 
+total_output = StringVar()
 total_output.set(str(total))
+junkan_rank_output = StringVar()
+junkan_rank_output.set(junkan_rank)
 
 title_label = Label(root, text="The Junk O Meeter!",)
 title_label.grid(row=0, column=0,  sticky=N)
 reset_button = Button(root, text="RESET", command=reset)
 reset_button.grid(row=0, column=1)
+junkan_toggle_button = Button(root, text="Toggle Junkan", command=Junkan_Toggle)
+junkan_toggle_button.grid(row=0, column=2, columnspan=2)
 
 junk_label = Label(root, text="Junk",)
 junk_label.grid(row=1,)
@@ -114,6 +155,11 @@ total_label.grid(row=4, sticky=N)
 total_output_label = Label(root, textvariable=total_output, bg="Darkorange2", fg="gold")
 total_output_label.grid(row=4, column=1)
 
+junkan_rank_label = Label(root, text="Junkan Rank: ")
+junkan_rank_label.grid(row=5, sticky=N)
+junkan_rank_output_label = Label(root, textvariable=junkan_rank_output)
+junkan_rank_output_label.grid(row=5, column=1, columnspan=3)
 
-
+robot_DMG_boost_label = Label(root, text="Robot DMG boost :")
+robot_DMG_boost_label.grid(row=6)
 root.mainloop() #Keeps the window open and running
