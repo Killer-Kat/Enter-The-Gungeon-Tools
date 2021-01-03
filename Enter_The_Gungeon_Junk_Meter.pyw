@@ -107,7 +107,7 @@ def Junkan_Toggle():
 #Gui
 root = Tk()
 root.title("Junk O Meeter")
-root.geometry("750x500")
+root.geometry("500x275")
 root.resizable(0,0)
 root.configure(background="saddle brown")
 
