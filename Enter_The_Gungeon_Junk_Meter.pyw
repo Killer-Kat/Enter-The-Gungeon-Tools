@@ -14,7 +14,7 @@ junkan_rank = "N/A"
 robot_DMG_boost = 0
 
 def reset():
-    global junk, gold_junk, lies, junkan, junkan_rank
+    global junk, gold_junk, lies, junkan, junkan_rank, robot_DMG_boost
     junk = 0
     gold_junk = 0
     lies = 0
